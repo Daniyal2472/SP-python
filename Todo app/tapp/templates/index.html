@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Todo App</title>
+  <!-- Include Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- Include Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <style>
+    .completed {
+      color: green;
+    }
+    .pending {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div class='container'>
+  <h2 class="mt-5">Todo App</h2>
+  <form method='post' class="mt-3">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="todoTitle" class="form-label">Todo Title</label>
+      <input type="text" class="form-control" id="todoTitle" name='title' placeholder="Enter your todo here" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Todo</button>
+  </form>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">Todo Title</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in todos %}
+      <tr>
+        <td>{{ i.title }}</td>
+        <td>
+          {% if i.status %}
+            <span class="completed"><i class="fas fa-check"></i> Completed</span>
+          {% else %}
+            <span class="pending"><i class="fas fa-exclamation-circle"></i> Pending</span>
+          {% endif %}
+        </td>
+        <td>
+          <button method='post' type="submit" class="btn btn-warning" name='done'><i class="fa-solid fa-check"></i></button>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
